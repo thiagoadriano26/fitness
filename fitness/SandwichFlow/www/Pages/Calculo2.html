@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=480, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../Styles/Radio.css" type="text/css" media="screen"
+        title="no title" charset="utf-8" />
+    <link rel="stylesheet" href="../Styles/master.css" type="text/css" media="screen"
+        title="no title" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8" src="../Scripts/console.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../Scripts/phonegap-1.3.rc1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#weight').blur(function () {
+                if ($("#weight").val().length <= 0) {
+                    $("#weight").addClass("validate");
+                } else {
+                    $("#weight").removeClass("validate");
+                }
+            });
+            $('#age').blur(function () {
+                if ($("#age").val().length <= 0) {
+                    $("#age").addClass("validate");
+                } else {
+                    $("#age").removeClass("validate");
+                }
+            });
+            $('#height').blur(function () {
+                if ($("#height").val().length <= 0) {
+                    $("#height").addClass("validate");
+                } else {
+                    $("#height").removeClass("validate");
+                }
+            });
+        });
+
+        function myfunction() {
+
+            if ($("#weight").val().length <= 0 || $("#height").val().length <= 0 || $("#age").val().length <= 0) {
+
+                if ($("#height").val().length <= 0) {
+                    $("#height").addClass("validate");
+                }
+
+                if ($("#weight").val().length <= 0) {
+                    $("#weight").addClass("validate");
+                }
+
+                if ($("#age").val().length <= 0) {
+                    $("#age").addClass("validate");
+                }
+            } else {
+                var age = parseInt(document.getElementById("age").value);
+                var height = parseInt(document.getElementById("height").value);
+                var weight = parseInt(document.getElementById("weight").value);
+                var sex;
+
+                if ($("input[type='radio']").is(':checked')) {
+                    sex = $("input[type='radio']:checked").val();
+
+                }
+
+
+                var vpeso = 0;
+                var valtura = 0;
+                var vidade = 0;
+                var vresultado = 0;
+                var vnenhuma = 0;
+                var vmoderada = 0;
+                var vintensa = 0;
+
+                modo = sex;
+
+                console.log("Model selected" + modo);
+
+                if (weight != "") {
+                    vpeso = parseFloat(weight);
+                }
+
+                if (height != "") {
+                    valtura = parseFloat(height);
+                }
+
+                if (age != "") {
+                    vidade = parseFloat(age);
+                }
+
+
+                if (modo == 'homem') {
+                    vresultado = parseFloat(66 + (13.7 * vpeso) + (5 * valtura) - (6.8 * vidade));
+
+
+                    console.log("Seu TMB é: " + vresultado.toFixed(2));
+
+                    $("#tmbResult").text(vresultado.toFixed(2));
+
+                    var total = vresultado + (vresultado * 0.25);
+                    vnenhuma = parseFloat(total);
+
+
+                    console.log("sedentario: " + vnenhuma.toFixed(2));
+
+                    $("#ndcNResult").text(vnenhuma.toFixed(2));
+
+                    total = vresultado + (vresultado * 0.35);
+                    vmoderada = parseFloat(total);
+
+                    console.log("moderada: " + vmoderada.toFixed(2));
+
+                    $("#ndcMResult").text(vmoderada.toFixed(2));
+
+                    total = vresultado + (vresultado * 0.45);
+                    vintensa = parseFloat(total);
+
+                    console.log("moderada: " + vintensa.toFixed(2));
+
+                    $("#ndcIResult").text(vintensa.toFixed(2));
+
+                } else if (modo = "mulher") {
+                    vresultado = parseFloat(655 + (9.6 * vpeso) + (1.7 * valtura) - (4.7 * vidade));
+
+                    $("#tmbResult").text(vresultado.toFixed(2));
+
+                    var total = vresultado + (vresultado * 0.20);
+
+                    vnenhuma = parseFloat(total);
+
+                    $("#ndcNResult").text(vnenhuma.toFixed(2));
+
+                    total = vresultado + (vresultado * 0.30);
+                    vmoderada = parseFloat(total);
+
+                    $("#ndcMResult").text(vmoderada.toFixed(2));
+
+                    total = vresultado + (vresultado * 0.40);
+                    vintensa = parseFloat(total);
+
+                    $("#ndcIResult").text(vmoderada.toFixed(2));
+                }
+            }
+        }
+
+        function Refresh() {
+            document.getElementById('height').value = '';
+            document.getElementById('weight').value = '';
+            document.getElementById('age').value = '';
+
+
+            $("#height").removeClass("validate");
+            $("#weight").removeClass("validate");
+            $("#age").removeClass("validate");
+
+            $("#tmbResult").text("");
+            $("#tmbResult").text("-------");
+            $("#ndcMResult").text("-------");
+            $("#ndcIResult").text("-------");
+            $("#ndcNResult").text("-------");
+
+        }
+
+    </script>
+    <style>
+        #content
+        {
+            width: 775px;
+            height: 605px;
+        }
+        #content label
+        {
+            display: block;
+            margin-right: 4px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div id="top">
+        <p class="titlePage">
+            Calculo de TMB e NDC</p>
+    </div>
+    <div id="calc1" style="height: 250px">
+        <table id="Table1">
+            <tr>
+                <td>
+                    Idade:
+                </td>
+                <td>
+                    <input class="rounded" value="" type="text" id="age" name="age" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Peso:
+                </td>
+                <td>
+                    <input class="rounded" value="" type="text" id="weight" name="weight" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Altura:
+                </td>
+                <td>
+                    <input class="rounded" type="text" id="height" value="" name="height" />
+                </td>
+            </tr>
+            <tr style="text-align: center">
+                <td style="text-align: center;">
+                    <span>Homem</span><input name="sex" type="radio" value="homem" id="radio-2-1" checked="checked"
+                        class="regular-radio big-radio" /><label for="radio-2-1"></label>
+                </td>
+                <td>
+                    <span style="margin: 0 5px 0 0">Mulher</span><input name="sex" type="radio" value="mulher"
+                        id="radio-2-2" class="regular-radio big-radio" /><label for="radio-2-2"></label>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="calc2" style="height: 280px">
+        <p>
+            <table id="result">
+                <tr id="Tr0">
+                    <td>
+                        TMB:
+                    </td>
+                    <td id="tmbResult">
+                        -------
+                    </td>
+                </tr>
+                <p>
+                    Considerando o seu ritimo de atividades:
+                </p>
+                <tr id="Tr2">
+                    <td>
+                        Nenhuma atividade física:
+                    </td>
+                    <td id="ndcNResult">
+                        -------
+                    </td>
+                </tr>
+                <tr id="Tr3">
+                    <td>
+                        Atividade física moderada:
+                    </td>
+                    <td id="ndcMResult">
+                        -------
+                    </td>
+                </tr>
+                <tr id="Tr5">
+                    <td>
+                        Atividade física intensa:
+                    </td>
+                    <td id="ndcIResult">
+                        -------
+                    </td>
+                </tr>
+            </table>
+    </div>
+    <div id="rodape">
+        <p style="text-align: center">
+            <img alt="Calcular" style="margin-right: 10%" onclick="myfunction()" src="../Styles/Images/Icons/appbar.check.png" />
+            <img alt="calcular" src="../styles/images/icons/appbar.refresh.png" width="90px"
+                onclick="Refresh()" />
+        </p>
+    </div>
+</body>
+</html>
